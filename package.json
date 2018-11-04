@@ -1,0 +1,13 @@
+{
+  "name": "blog",
+  "version": "0.0.1",
+  "description": "test blog app",
+  "main": "index.js",
+  "keywords": [
+    "gcf",
+    "functions",
+    "blog"
+  ],
+  "author": "Daniel Eriksson",
+  "license": "MIT"
+}
