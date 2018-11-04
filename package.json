@@ -9,7 +9,9 @@
   "scripts": {
     "test": "ava test/sample.unit.http.test.js",
     "test:integration": "ava test/sample.integration.http.test.js",
-    "test:watch": "ava --watch"
+    "test:watch": "ava --watch",
+    "deploy": "sh scripts/deploy-functions.sh",
+    "describe": "sh scripts/describe-functions.sh"
   },
   "keywords": [
     "gcf",
