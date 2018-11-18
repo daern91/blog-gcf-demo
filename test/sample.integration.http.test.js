@@ -23,3 +23,24 @@ test.cb(`helloHttp: should print hello world`, t => {
     })
     .end(t.end);
 });
+
+test.cb(`createAuthor: should save an author`, t => {
+  const author = {
+    first_name: "Isaac",
+    family_name: "Asimov",
+    date_of_birth: "1920-01-02"
+  };
+  supertest
+    .post(`/createAuthor`)
+    .send(author)
+    .expect(200)
+    .expect(response => {
+      t.is(
+        response.text,
+        `Author ${author.first_name} ${
+          author.family_name
+        } successfully created!`
+      );
+    })
+    .end(t.end);
+});
