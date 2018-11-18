@@ -16,11 +16,13 @@ exports.helloHttp = (req, res) => {
   res.send(`Hello ${req.body.name || "World"}!`);
 };
 
-function createAuthor(first_name, family_name, date_of_birth) {
-  Author.create({ first_name, family_name, date_of_birth }).then(author => {
-    console.log(author);
-    console.log("saved!");
-  });
+function _createAuthor(first_name, family_name, date_of_birth) {
+  return Author.create({ first_name, family_name, date_of_birth }).then(
+    author => {
+      console.log(author);
+      console.log("saved!");
+    }
+  );
 }
 
 exports.createAuthor = (req, res) => {
@@ -31,7 +33,27 @@ exports.createAuthor = (req, res) => {
   );
 
   const { first_name, family_name, date_of_birth } = req.body;
-  createAuthor(first_name, family_name, date_of_birth);
+  return _createAuthor(first_name, family_name, date_of_birth).then(() => {
+    res.send(`Author ${first_name} ${family_name} successfully created!`);
+  });
+};
 
-  res.send(`Author ${first_name} ${family_name} successfully created!`);
+function _createPost(title, author, content, visible) {
+  return Post.create({ title, author, content, visible }).then(post => {
+    console.log(post);
+    console.log("saved!");
+  });
+}
+
+exports.createPost = (req, res) => {
+  mongoose.connect(mongoDB);
+  mongoose.connection.on(
+    "error",
+    console.error.bind(console, "MongoDB connection error:")
+  );
+
+  const { title, author, content, visible } = req.body;
+  return _createPost(title, author, content, visible).then(() => {
+    res.send(`Post ${title} successfully created!`);
+  });
 };
