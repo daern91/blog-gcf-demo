@@ -1,6 +1,7 @@
 const test = require(`ava`);
 const Supertest = require(`supertest`);
-// const supertest = Supertest(process.env.BASE_URL);
+const id = require("mongoose").Types.ObjectId();
+
 const supertest = Supertest("localhost:8010");
 
 test.cb(`helloHttp: should print a name`, t => {
@@ -41,6 +42,24 @@ test.cb(`createAuthor: should save an author`, t => {
           author.family_name
         } successfully created!`
       );
+    })
+    .end(t.end);
+});
+
+test.cb(`createPost: should save a post`, t => {
+  const post = {
+    title: "The Name of the Wind",
+    author: id,
+    content:
+      "I have stolen princesses back from sleeping barrow kings. I burned down the town of Trebon. I have spent the night with Felurian and left with both my sanity and my life. I was expelled from the University at a younger age than most people are allowed in. I tread paths by moonlight that others fear to speak of during day. I have talked to Gods, loved women, and written songs that make the minstrels weep.",
+    visible: true
+  };
+  supertest
+    .post(`/createPost`)
+    .send(post)
+    .expect(200)
+    .expect(response => {
+      t.is(response.text, `Post ${post.title} successfully created!`);
     })
     .end(t.end);
 });

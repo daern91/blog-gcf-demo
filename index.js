@@ -2,7 +2,13 @@ const mongoose = require("mongoose");
 
 const Post = require("./models/post");
 const Author = require("./models/author");
-const mongoDB = require("./config/db").url;
+
+let mongoDB;
+try {
+  mongoDB = require("./config/db").url;
+} catch (error) {
+  mongoDB = process.env.MONGODB;
+}
 
 /**
  * HTTP Cloud Function.
